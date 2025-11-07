@@ -1,0 +1,216 @@
+const { v4: uuidv4 } = require('uuid');
+
+// Entidades según la estructura de datos especificada
+class Persona {
+    constructor(documento, nombre, email, telefono, fecha_nacimiento) {
+        this.id = null;
+        this.documento = documento; // varchar(10)
+        this.nombre = nombre; // varchar(100)
+        this.email = email; // varchar(50)
+        this.telefono = telefono; // varchar(10)
+        this.fecha_nacimiento = fecha_nacimiento; // date
+    }
+}
+
+class Estado {
+    constructor(descripcion) {
+        this.id = null;
+        this.descripcion = descripcion; // varchar(20)
+    }
+}
+
+class Solicitud {
+    constructor(fecha, solicitante_id, codeudor_id, valor, estado_id, observacion, codigo_radicado) {
+        this.id = null;
+        this.fecha = fecha; // date
+        this.solicitante_id = solicitante_id; // integer
+        this.codeudor_id = codeudor_id; // integer
+        this.valor = valor; // numeric(10,0)
+        this.estado_id = estado_id; // integer
+        this.observacion = observacion; // text
+        this.codigo_radicado = codigo_radicado; // varchar(10)
+    }
+}
+
+class Validacion {
+    constructor(email, documento, fecha, estado, token, codigo) {
+        this.id = null;
+        this.email = email; // varchar(50)
+        this.documento = documento; // varchar(10)
+        this.fecha = fecha; // date
+        this.estado = estado; // varchar(20) - 'pendiente' o 'validada'
+        this.token = token; // varchar(100) - único
+        this.codigo = codigo; // varchar(100) - único
+    }
+}
+
+// Repositorios - Simulación de base de datos
+class Database {
+    constructor() {
+        this.personas = [];
+        this.estados = [];
+        this.solicitudes = [];
+        this.validaciones = [];
+        this.initializeData();
+    }
+
+    initializeData() {
+        // Inicializar estados
+        this.estados = [
+            { id: 1, descripcion: 'solicitud' },
+            { id: 2, descripcion: 'aprobada' },
+            { id: 3, descripcion: 'rechazada' },
+            { id: 4, descripcion: 'finalizada' }
+        ];
+
+        // Datos de ejemplo
+        this.personas = [
+            { id: 1, documento: '1234567890', nombre: 'Juan Aguirre', email: 'juan.aguirre@ufps.edu.co', telefono: '3001234567', fecha_nacimiento: '1995-05-15' },
+            { id: 2, documento: '0987654321', nombre: 'Anita Gonzales', email: 'anita.gonzales@ufps.edu.co', telefono: '3007654321', fecha_nacimiento: '1998-08-22' },
+            { id: 3, documento: '1122334455', nombre: 'Carlos Rodriguez', email: 'carlos.rodriguez@ufps.edu.co', telefono: '3001122334', fecha_nacimiento: '1997-03-10' }
+        ];
+
+        this.solicitudes = [
+            { id: 1, fecha: '2024-01-15', solicitante_id: 1, codeudor_id: 2, valor: 5000000, estado_id: 2, observacion: 'Solicitud para equipo de computo', codigo_radicado: 'SOL001' },
+            { id: 2, fecha: '2024-01-20', solicitante_id: 3, codeudor_id: 1, valor: 3000000, estado_id: 1, observacion: 'Solicitud para materiales', codigo_radicado: 'SOL002' }
+        ];
+
+        this.validaciones = [
+            { id: 1, email: 'juan.aguirre@ufps.edu.co', documento: '1234567890', fecha: '2024-01-15', estado: 'validada', token: 'token123', codigo: 'COD001' },
+            { id: 2, email: 'anita.gonzales@ufps.edu.co', documento: '0987654321', fecha: '2024-01-16', estado: 'pendiente', token: 'token456', codigo: 'COD002' }
+        ];
+    }
+
+    // Repositorio Personas
+    crearPersona(personaData) {
+        const newId = this.personas.length > 0 ? Math.max(...this.personas.map(p => p.id)) + 1 : 1;
+        const persona = new Persona(
+            personaData.documento,
+            personaData.nombre,
+            personaData.email,
+            personaData.telefono,
+            personaData.fecha_nacimiento
+        );
+        persona.id = newId;
+        this.personas.push(persona);
+        return persona;
+    }
+
+    obtenerPersonas() {
+        return this.personas;
+    }
+
+    obtenerPersonaPorId(id) {
+        return this.personas.find(p => p.id === id);
+    }
+
+    obtenerPersonaPorDocumento(documento) {
+        return this.personas.find(p => p.documento === documento);
+    }
+
+    // Repositorio Estados
+    obtenerEstados() {
+        return this.estados;
+    }
+
+    obtenerEstadoPorId(id) {
+        return this.estados.find(e => e.id === id);
+    }
+
+    // Repositorio Solicitudes
+    crearSolicitud(solicitudData) {
+        const newId = this.solicitudes.length > 0 ? Math.max(...this.solicitudes.map(s => s.id)) + 1 : 1;
+        const codigoRadicado = `SOL${String(newId).padStart(3, '0')}`;
+        
+        const solicitud = new Solicitud(
+            solicitudData.fecha || new Date().toISOString().split('T')[0],
+            solicitudData.solicitante_id,
+            solicitudData.codeudor_id,
+            solicitudData.valor,
+            solicitudData.estado_id || 1, // Estado por defecto: solicitud
+            solicitudData.observacion || '',
+            codigoRadicado
+        );
+        solicitud.id = newId;
+        this.solicitudes.push(solicitud);
+        return solicitud;
+    }
+
+    obtenerSolicitudes() {
+        return this.solicitudes.map(solicitud => {
+            const solicitante = this.obtenerPersonaPorId(solicitud.solicitante_id);
+            const codeudor = this.obtenerPersonaPorId(solicitud.codeudor_id);
+            const estado = this.obtenerEstadoPorId(solicitud.estado_id);
+            
+            return {
+                id: solicitud.id,
+                fecha: solicitud.fecha,
+                solicitante: solicitante ? solicitante.nombre : 'No encontrado',
+                codeudor: codeudor ? codeudor.nombre : 'No encontrado',
+                estado: estado ? estado.descripcion : 'Desconocido',
+                codigo_radicado: solicitud.codigo_radicado,
+                valor: solicitud.valor,
+                observacion: solicitud.observacion
+            };
+        });
+    }
+
+    obtenerSolicitudPorId(id) {
+        return this.solicitudes.find(s => s.id === id);
+    }
+
+    actualizarEstadoSolicitud(id, nuevoEstadoId) {
+        const solicitud = this.obtenerSolicitudPorId(id);
+        if (solicitud) {
+            solicitud.estado_id = nuevoEstadoId;
+            return true;
+        }
+        return false;
+    }
+
+    // Repositorio Validaciones
+    crearValidacion(validacionData) {
+        const newId = this.validaciones.length > 0 ? Math.max(...this.validaciones.map(v => v.id)) + 1 : 1;
+        const token = uuidv4();
+        const codigo = `VAL${String(newId).padStart(3, '0')}`;
+        
+        const validacion = new Validacion(
+            validacionData.email,
+            validacionData.documento,
+            validacionData.fecha || new Date().toISOString().split('T')[0],
+            'pendiente', // Estado inicial
+            token,
+            codigo
+        );
+        validacion.id = newId;
+        this.validaciones.push(validacion);
+        return validacion;
+    }
+
+    obtenerValidaciones() {
+        return this.validaciones;
+    }
+
+    obtenerValidacionPorToken(token) {
+        return this.validaciones.find(v => v.token === token);
+    }
+
+    actualizarEstadoValidacion(id, nuevoEstado) {
+        const validacion = this.validaciones.find(v => v.id === id);
+        if (validacion) {
+            validacion.estado = nuevoEstado;
+            return true;
+        }
+        return false;
+    }
+
+    validarTokenUnico(token) {
+        return !this.validaciones.some(v => v.token === token);
+    }
+
+    validarCodigoUnico(codigo) {
+        return !this.validaciones.some(v => v.codigo === codigo);
+    }
+}
+
+module.exports = { Database, Persona, Estado, Solicitud, Validacion };

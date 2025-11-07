@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créditos Financieros UFPS - Servicios</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .service-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .service-title {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-col {
+            flex: 1;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background-color: var(--light-color);
+            margin: 25px 0;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+        
+        .result.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .result.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .token-info {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .email-simulator {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .email-header {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .email-content {
+            line-height: 1.6;
+        }
+        
+        .token-display {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Servicios - Créditos Financieros UFPS</h1>
+        </header>
+        
+        <!-- Servicio 4: Registro de Solicitud -->
+        <section class="service-section">
+            <h2 class="service-title">4. Registro de Solicitud de Crédito</h2>
+            
+            <form id="solicitudForm">
+                <div class="form-row">
+                    <div class="form-col">
+                        <h3>Datos del Solicitante</h3>
+                        <div class="form-group">
+                            <label for="solicitanteDocumento">Documento *</label>
+                            <input type="text" id="solicitanteDocumento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="solicitanteNombre">Nombre Completo *</label>
+                            <input type="text" id="solicitanteNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="solicitanteEmail">Email *</label>
+                            <input type="email" id="solicitanteEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="solicitanteTelefono">Teléfono *</label>
+                            <input type="text" id="solicitanteTelefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="solicitanteFechaNacimiento">Fecha de Nacimiento *</label>
+                            <input type="date" id="solicitanteFechaNacimiento" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <h3>Datos del Codeudor</h3>
+                        <div class="form-group">
+                            <label for="codeudorDocumento">Documento *</label>
+                            <input type="text" id="codeudorDocumento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="codeudorNombre">Nombre Completo *</label>
+                            <input type="text" id="codeudorNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="codeudorEmail">Email *</label>
+                            <input type="email" id="codeudorEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="codeudorTelefono">Teléfono *</label>
+                            <input type="text" id="codeudorTelefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="codeudorFechaNacimiento">Fecha de Nacimiento *</label>
+                            <input type="date" id="codeudorFechaNacimiento" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="form-group">
+                    <label for="observacion">Observación</label>
+                    <textarea id="observacion" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Registrar Solicitud</button>
+            </form>
+            
+            <!-- Simulador de envío de correo -->
+            <div id="emailSimulator" class="email-simulator">
+                <div class="email-header">
+                    <h3>📧 Correo Electrónico Enviado</h3>
+                    <p><strong>Para:</strong> <span id="emailDestinatario"></span></p>
+                    <p><strong>Asunto:</strong> Validación de Solicitud de Crédito UFPS</p>
+                </div>
+                <div class="email-content">
+                    <p>Estimado/a <span id="emailNombre"></span>,</p>
+                    
+                    <p>Hemos recibido su solicitud de crédito con código: <strong id="emailCodigo"></strong></p>
+                    
+                    <p>Para continuar con el proceso, por favor valide su solicitud utilizando el siguiente token:</p>
+                    
+                    <div class="token-display" id="emailToken"></div>
+                    
+                    <p><strong>Importante:</strong> Este token tiene una validez de 15 minutos.</p>
+                    
+                    <p>Puede validar su solicitud ingresando el token en nuestro sistema.</p>
+                    
+                    <p>Atentamente,<br>
+                    <strong>Equipo de Créditos Financieros UFPS</strong></p>
+                </div>
+            </div>
+            
+            <div id="resultSolicitud" class="result"></div>
+        </section>
+        
+        <!-- Servicio 5: Validación de Token -->
+        <section class="service-section">
+            <h2 class="service-title">5. Validación de Token</h2>
+            
+            <div class="token-info">
+                <p><strong>Información:</strong> El token tiene un tiempo de validación de 15 minutos. Pasado este tiempo, se considerará vencido.</p>
+            </div>
+            
+            <form id="validacionForm">
+                <div class="form-group">
+                    <label for="token">Token de Validación *</label>
+                    <input type="text" id="token" required placeholder="Ingrese el token recibido por correo">
+                </div>
+                
+                <button type="submit" class="btn btn-success">Validar Token</button>
+            </form>
+            
+            <div id="resultValidacion" class="result"></div>
+        </section>
+    </div>
+
+    <script>
+        // Simulación de base de datos en memoria
+        const solicitudes = [];
+        const tokens = [];
+        const personas = [];
+        const emailsEnviados = [];
+        
+        // Servicio 4: Registro de Solicitud
+        document.getElementById('solicitudForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener datos del formulario
+            const solicitante = {
+                documento: document.getElementById('solicitanteDocumento').value,
+                nombre: document.getElementById('solicitanteNombre').value,
+                email: document.getElementById('solicitanteEmail').value,
+                telefono: document.getElementById('solicitanteTelefono').value,
+                fecha_nacimiento: document.getElementById('solicitanteFechaNacimiento').value
+            };
+            
+            const codeudor = {
+                documento: document.getElementById('codeudorDocumento').value,
+                nombre: document.getElementById('codeudorNombre').value,
+                email: document.getElementById('codeudorEmail').value,
+                telefono: document.getElementById('codeudorTelefono').value,
+                fecha_nacimiento: document.getElementById('codeudorFechaNacimiento').value
+            };
+            
+            const observacion = document.getElementById('observacion').value;
+            
+            // Validaciones
+            const resultado = registrarSolicitud(solicitante, codeudor, observacion);
+            
+            // Mostrar resultado
+            const resultDiv = document.getElementById('resultSolicitud');
+            if (resultado.exito) {
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <h3>Solicitud Registrada Exitosamente</h3>
+                    <p><strong>ID:</strong> ${resultado.id}</p>
+                    <p><strong>Fecha:</strong> ${resultado.fecha}</p>
+                    <p><strong>Código de Radicado:</strong> ${resultado.codigo_radicado}</p>
+                    <p><strong>Estado:</strong> ${resultado.estado}</p>
+                    <p><strong>Token generado y enviado al correo:</strong> ${solicitante.email}</p>
+                `;
+                
+                // Mostrar simulador de correo
+                mostrarEmailSimulador(solicitante, resultado.codigo_radicado, resultado.token);
+            } else {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<h3>Error en el Registro</h3><p>${resultado.mensaje}</p>`;
+            }
+        });
+        
+        // Función para mostrar el simulador de correo
+        function mostrarEmailSimulador(solicitante, codigoRadicado, token) {
+            const emailSimulator = document.getElementById('emailSimulator');
+            document.getElementById('emailDestinatario').textContent = solicitante.email;
+            document.getElementById('emailNombre').textContent = solicitante.nombre;
+            document.getElementById('emailCodigo').textContent = codigoRadicado;
+            document.getElementById('emailToken').textContent = token;
+            
+            emailSimulator.style.display = 'block';
+            
+            // Scroll hacia el simulador de correo
+            emailSimulator.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Función para registrar solicitud
+        function registrarSolicitud(solicitante, codeudor, observacion) {
+            // Validar que solicitante y codeudor sean distintos
+            if (solicitante.documento === codeudor.documento) {
+                return {
+                    exito: false,
+                    mensaje: "El solicitante y el codeudor no pueden ser la misma persona."
+                };
+            }
+            
+            // Validar que no tengan los mismos datos de contacto
+            if (solicitante.email === codeudor.email) {
+                return {
+                    exito: false,
+                    mensaje: "El solicitante y el codeudor no pueden tener el mismo email."
+                };
+            }
+            
+            if (solicitante.telefono === codeudor.telefono) {
+                return {
+                    exito: false,
+                    mensaje: "El solicitante y el codeudor no pueden tener el mismo teléfono."
+                };
+            }
+            
+            // Validar que el correo del solicitante esté validado
+            const emailValidado = validarEmail(solicitante.email);
+            if (!emailValidado) {
+                return {
+                    exito: false,
+                    mensaje: "El email del solicitante no está validado."
+                };
+            }
+            
+            // Validar que el solicitante no tenga una solicitud en estado "aprobado" o "solicitud"
+            const solicitudesSolicitante = solicitudes.filter(s => 
+                s.solicitante.documento === solicitante.documento && 
+                (s.estado === "aprobado" || s.estado === "solicitud")
+            );
+            
+            if (solicitudesSolicitante.length > 0) {
+                return {
+                    exito: false,
+                    mensaje: "El solicitante ya tiene una solicitud en proceso o aprobada."
+                };
+            }
+            
+            // Si tiene una solicitud en estado "rechazada", la nueva solicitud también será rechazada
+            let estado = "solicitud";
+            const solicitudesRechazadas = solicitudes.filter(s => 
+                s.solicitante.documento === solicitante.documento && 
+                s.estado === "rechazada"
+            );
+            
+            if (solicitudesRechazadas.length > 0) {
+                estado = "rechazada";
+            }
+            
+            // Generar ID y código de radicado
+            const id = generarId();
+            const codigo_radicado = generarCodigoRadicado();
+            const fecha = new Date().toISOString().split('T')[0];
+            
+            // Crear token de validación (15 minutos de validez)
+            const token = generarToken();
+            const tokenExpiracion = new Date();
+            tokenExpiracion.setMinutes(tokenExpiracion.getMinutes() + 15);
+            
+            // Registrar la solicitud
+            const nuevaSolicitud = {
+                id,
+                fecha,
+                codigo_radicado,
+                solicitante,
+                codeudor,
+                observacion,
+                estado,
+                token: {
+                    valor: token,
+                    expiracion: tokenExpiracion,
+                    validado: false
+                }
+            };
+            
+            solicitudes.push(nuevaSolicitud);
+            tokens.push({
+                token: token,
+                id_solicitud: id,
+                expiracion: tokenExpiracion,
+                validado: false
+            });
+            
+            // Enviar token por correo
+            const emailEnviado = enviarTokenPorEmail(solicitante, codigo_radicado, token);
+            
+            if (!emailEnviado) {
+                return {
+                    exito: false,
+                    mensaje: "Error al enviar el token de validación por correo."
+                };
+            }
+            
+            return {
+                exito: true,
+                id,
+                fecha,
+                codigo_radicado,
+                estado,
+                token // Solo para demostración, en producción no se retornaría
+            };
+        }
+        
+        // Función para enviar token por correo
+        function enviarTokenPorEmail(solicitante, codigoRadicado, token) {
+            try {
+                // En un entorno real, aquí se conectaría con un servicio de email
+                // como SendGrid, Mailgun, o el SMTP de la universidad
+                
+                // Simulación de envío de correo
+                const emailData = {
+                    to: solicitante.email,
+                    subject: "Validación de Solicitud de Crédito UFPS",
+                    nombre: solicitante.nombre,
+                    codigo: codigoRadicado,
+                    token: token,
+                    fechaEnvio: new Date().toISOString()
+                };
+                
+                emailsEnviados.push(emailData);
+                
+                console.log(`📧 Email enviado a: ${solicitante.email}`);
+                console.log(`📋 Código de radicado: ${codigoRadicado}`);
+                console.log(`🔑 Token: ${token}`);
+                
+                // Simular delay de envío
+                console.log("⏳ Simulando envío de correo...");
+                
+                return true;
+            } catch (error) {
+                console.error("Error al enviar el correo:", error);
+                return false;
+            }
+        }
+        
+        // Servicio 5: Validación de Token
+        document.getElementById('validacionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const token = document.getElementById('token').value;
+            
+            const resultado = validarToken(token);
+            
+            const resultDiv = document.getElementById('resultValidacion');
+            if (resultado.exito) {
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `<h3>Token Validado Exitosamente</h3><p>${resultado.mensaje}</p>`;
+            } else {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<h3>Error en la Validación</h3><p>${resultado.mensaje}</p>`;
+            }
+        });
+        
+        // Función para validar token
+        function validarToken(token) {
+            // Buscar el token
+            const tokenEncontrado = tokens.find(t => t.token === token);
+            
+            if (!tokenEncontrado) {
+                return {
+                    exito: false,
+                    mensaje: "Token no encontrado."
+                };
+            }
+            
+            // Verificar si el token ya fue validado
+            if (tokenEncontrado.validado) {
+                return {
+                    exito: false,
+                    mensaje: "El token ya ha sido validado anteriormente."
+                };
+            }
+            
+            // Verificar si el token ha expirado (15 minutos)
+            const ahora = new Date();
+            if (ahora > tokenEncontrado.expiracion) {
+                return {
+                    exito: false,
+                    mensaje: "El token ha expirado. El tiempo de validación es de 15 minutos."
+                };
+            }
+            
+            // Marcar token como validado
+            tokenEncontrado.validado = true;
+            
+            // Actualizar estado de la solicitud
+            const solicitud = solicitudes.find(s => s.id === tokenEncontrado.id_solicitud);
+            if (solicitud) {
+                solicitud.estado = "validada";
+                solicitud.token.validado = true;
+            }
+            
+            return {
+                exito: true,
+                mensaje: "Token validado correctamente. El estado de la solicitud ha cambiado a 'validada'."
+            };
+        }
+        
+        // Funciones auxiliares
+        function validarEmail(email) {
+            // En un caso real, aquí se verificaría contra una base de datos de emails validados
+            // Por ahora, simulamos que todos los emails están validados
+            return true;
+        }
+        
+        function generarId() {
+            return 'SOL_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        function generarCodigoRadicado() {
+            const fecha = new Date();
+            const year = fecha.getFullYear();
+            const month = String(fecha.getMonth() + 1).padStart(2, '0');
+            const day = String(fecha.getDate()).padStart(2, '0');
+            const random = Math.random().toString(36).substr(2, 6).toUpperCase();
+            
+            return `RAD-${year}${month}${day}-${random}`;
+        }
+        
+        function generarToken() {
+            return Math.random().toString(36).substr(2, 10).toUpperCase();
+        }
+        // Ejemplo con SendGrid
+async function enviarTokenPorEmailReal(solicitante, codigoRadicado, token) {
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    
+    const msg = {
+        to: solicitante.email,
+        from: 'creditos@ufps.edu.co',
+        subject: 'Validación de Solicitud de Crédito UFPS',
+        html: `
+            <h2>Validación de Solicitud de Crédito</h2>
+            <p>Estimado/a ${solicitante.nombre},</p>
+            <p>Hemos recibido su solicitud de crédito con código: <strong>${codigoRadicado}</strong></p>
+            <p>Para continuar con el proceso, por favor valide su solicitud utilizando el siguiente token:</p>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;">
+                ${token}
+            </div>
+            <p><strong>Importante:</strong> Este token tiene una validez de 15 minutos.</p>
+            <p>Atentamente,<br><strong>Equipo de Créditos Financieros UFPS</strong></p>
+        `
+    };
+    
+    try {
+        await sgMail.send(msg);
+        return true;
+    } catch (error) {
+        console.error('Error enviando email:', error);
+        return false;
+    }
+}
+    </script>
+</body>
+</html>
